@@ -98,7 +98,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".btn{\n    text-transform: uppercase !important;\n}"
+module.exports = ".btn{\n    text-transform: uppercase !important;\n}\n.custom-modal-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.7);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  z-index: 9999;\n}\n.custom-modal-content {\n  background: white;\n  padding: 30px;\n  border-radius: 12px;\n  text-align: center;\n  box-shadow: 0 4px 15px rgba(0,0,0,0.3);\n  min-width: 320px;\n}\n.password-display input {\n  width: 100%;\n  font-size: 24px;\n  text-align: center;\n  margin-bottom: 20px;\n  border: 1px solid #ccc;\n  padding: 10px;\n  border-radius: 4px;\n  background-color: #f8f9fa;\n}\n.numeric-keyboard {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  margin-bottom: 20px;\n}\n.keyboard-row {\n  display: flex;\n  justify-content: center;\n  gap: 10px;\n}\n.numeric-keyboard button, .spacer {\n  width: 65px;\n  height: 60px;\n}\n.numeric-keyboard button {\n  font-size: 20px;\n  font-weight: bold;\n  border: 1px solid #ddd;\n  background: #f9f9f9;\n  border-radius: 8px;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.numeric-keyboard button:active {\n  background: #e0e0e0;\n}\n/* Estilo específico para o botão de apagar */\n.btn-clear {\n  background-color: #fff3f3 !important;\n  color: #dc3545;\n}\n/* Rodapé com botões lado a lado */\n.modal-footer {\n  display: flex;\n  justify-content: space-between;\n  gap: 15px;\n  margin-top: 20px;\n}\n.modal-footer button {\n  flex: 1;\n  padding: 12px;\n  border: none;\n  border-radius: 6px;\n  font-weight: bold;\n  cursor: pointer;\n}\n.btn-confirm {\n  background-color: #28a745;\n  color: white;\n}\n.btn-cancel {\n  background-color: #dc3545;\n  color: white;\n}\n.modal-footer button:hover {\n  opacity: 0.9;\n}"
 
 /***/ }),
 
@@ -109,7 +109,7 @@ module.exports = ".btn{\n    text-transform: uppercase !important;\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"row\" id=\"root\">\n  <div class=\"col-md-4 columns\" id=\"esquerdo\">\n    <img src=\"assets/img/logo.png\" />\n  </div>\n  <div class=\"col-md-8 columns\" id=\"direito\">\n    <router-outlet></router-outlet>\n  </div>\n</div>"
+module.exports = "<div class=\"row\" id=\"root\">\n  <div class=\"col-md-4 columns\" id=\"esquerdo\">\n    <img src=\"assets/img/logo.png\" (click)=\"onLogoClick()\" style=\"cursor: pointer;\" />\n  </div>\n  <div class=\"col-md-8 columns\" id=\"direito\">\n    <router-outlet></router-outlet>\n  </div>\n</div>\n\n<div class=\"custom-modal-overlay\" *ngIf=\"showModal\">\n  <div class=\"custom-modal-content\">\n    <h3>Configurações</h3>\n    <p>Digite a senha de acesso:</p>\n    \n    <div class=\"password-display\">\n      <input type=\"password\" [value]=\"enteredPassword\" readonly placeholder=\"********\" />\n    </div>\n\n    <div class=\"numeric-keyboard\">\n      <div class=\"keyboard-row\">\n        <button (click)=\"addDigit('1')\">1</button>\n        <button (click)=\"addDigit('2')\">2</button>\n        <button (click)=\"addDigit('3')\">3</button>\n      </div>\n      <div class=\"keyboard-row\">\n        <button (click)=\"addDigit('4')\">4</button>\n        <button (click)=\"addDigit('5')\">5</button>\n        <button (click)=\"addDigit('6')\">6</button>\n      </div>\n      <div class=\"keyboard-row\">\n        <button (click)=\"addDigit('7')\">7</button>\n        <button (click)=\"addDigit('8')\">8</button>\n        <button (click)=\"addDigit('9')\">9</button>\n      </div>\n      <div class=\"keyboard-row\">\n        <div class=\"spacer\"></div> <button (click)=\"addDigit('0')\">0</button>\n        <button (click)=\"clearDigits()\" class=\"btn-clear\">\n          <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n            <path d=\"M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z\"></path>\n            <line x1=\"18\" y1=\"9\" x2=\"12\" y2=\"15\"></line>\n            <line x1=\"12\" y1=\"9\" x2=\"18\" y2=\"15\"></line>\n          </svg>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"modal-footer\">\n      <button (click)=\"cancel()\" class=\"btn-cancel\">Cancelar</button>\n      <button (click)=\"confirm()\" class=\"btn-confirm\">OK</button>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -124,23 +124,99 @@ module.exports = "\n<div class=\"row\" id=\"root\">\n  <div class=\"col-md-4 col
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
-        this.title = 'app';
+    function AppComponent(router) {
+        this.router = router;
+        this.clickTimes = [];
+        this.showModal = false;
+        this.enteredPassword = '';
     }
+    AppComponent.prototype.onLogoClick = function () {
+        var now = Date.now();
+        this.clickTimes.push(now);
+        if (this.clickTimes.length > 10)
+            this.clickTimes.shift();
+        if (this.clickTimes.length === 10) {
+            if (this.clickTimes[9] - this.clickTimes[0] <= 5000) {
+                this.openModal();
+                this.clickTimes = [];
+            }
+        }
+    };
+    AppComponent.prototype.openModal = function () {
+        this.showModal = true;
+        this.enteredPassword = '';
+        this.resetTimer();
+    };
+    AppComponent.prototype.closeModal = function () {
+        this.showModal = false;
+        this.clearTimer();
+    };
+    AppComponent.prototype.addDigit = function (digit) {
+        if (this.enteredPassword.length < 8) {
+            this.enteredPassword += digit;
+            this.resetTimer();
+        }
+    };
+    AppComponent.prototype.clearDigits = function () {
+        // Apaga o último dígito ou limpa tudo se preferir
+        this.enteredPassword = this.enteredPassword.slice(0, -1);
+        this.resetTimer();
+    };
+    AppComponent.prototype.confirm = function () {
+        var correctPass = this.getCurrentDatePassword();
+        if (this.enteredPassword === correctPass) {
+            this.closeModal();
+            this.router.navigate(['/configuracao']);
+        }
+        else {
+            alert('Senha incorreta!');
+            this.enteredPassword = '';
+            this.resetTimer();
+        }
+    };
+    AppComponent.prototype.cancel = function () {
+        this.closeModal();
+        this.router.navigate(['/']);
+    };
+    AppComponent.prototype.resetTimer = function () {
+        var _this = this;
+        this.clearTimer();
+        this.modalTimeout = setTimeout(function () { return _this.closeModal(); }, 30000);
+    };
+    AppComponent.prototype.clearTimer = function () {
+        if (this.modalTimeout)
+            clearTimeout(this.modalTimeout);
+    };
+    AppComponent.prototype.getCurrentDatePassword = function () {
+        var now = new Date();
+        var day = String(now.getDate()).padStart(2, '0');
+        var month = String(now.getMonth() + 1).padStart(2, '0');
+        var year = String(now.getFullYear());
+        return "" + day + month + year;
+    };
+    AppComponent.prototype.ngOnDestroy = function () {
+        this.clearTimer();
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
-        })
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], AppComponent);
     return AppComponent;
 }());
